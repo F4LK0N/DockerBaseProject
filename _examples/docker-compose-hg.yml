@@ -1,0 +1,37 @@
+version: '3.0'
+services:
+  web:
+    container_name: hgapi-webserver
+    depends_on:
+      - php
+    build: ./docker/nginx
+    image: hgapi/webserver
+    networks:
+      - backend-hg
+    ports:
+      - 8081:80
+    volumes:
+      - ./docker/nginx/certs:/etc/nginx/certs
+      - ./docker/nginx/conf:/etc/nginx/sites-available
+      - ./:/var/www/html
+
+  php:
+    container_name: hgapi-phpfpm
+    build: ./docker/php
+    image: hgapi/php
+    networks:
+      - backend-hg
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - ENVIRONMENT=dev
+      - REGION=dev
+
+  redis:
+    container_name: hgapi-redis
+    image: redis:4.0-alpine
+    networks:
+      - backend-hg
+
+networks:
+  backend-hg:
