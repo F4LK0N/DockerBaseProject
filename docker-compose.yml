@@ -2,7 +2,7 @@ version: '2.2'
 services:
   php-apache:
     container_name: php-apache
-    image: php:8.1-apache
+    build: ./docker/php-apache
     volumes:
       - ./app:/var/www/html/
     networks:
