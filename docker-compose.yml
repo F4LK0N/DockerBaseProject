@@ -1,10 +1,8 @@
 version: '2.2'
 services:
-  php-apache:
-    container_name: php-apache
-    build: ./docker/php-apache
-    volumes:
-      - ./app:/var/www/html/
+  debian:
+    container_name: debian
+    build: ./docker/debian
     networks:
       - backend
     ports:
