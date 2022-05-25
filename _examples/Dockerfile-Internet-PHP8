@@ -1,0 +1,15 @@
+#https://solveforum.com/forums/threads/solved-using-run-in-dockerfile-to-install-laravel-inside-a-php-image-is-not-working.546781/
+FROM php:8.1-apache
+
+# Mysql driver on php
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+# Composer
+RUN apt-get update && apt-get install -y git zip
+COPY --from=composer:2.2.2 /usr/bin/composer /usr/bin/composer
+
+# Node.js
+RUN apt-get update && apt-get install -y nodejs npm
+
+# Laravel
+RUN composer create-project laravel/laravel=8.* . --prefer-dist

@@ -1,0 +1,45 @@
+version: '3.0'
+services:
+  web:
+    container_name: ecossistema-webserver
+    depends_on:
+      - php
+    build: ./docker/nginx
+    networks:
+      - backend
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./docker/nginx/certs:/etc/nginx/certs
+      - ./docker/nginx/conf:/etc/nginx/sites-available
+      - ./:/var/www/html
+
+  php:
+    container_name: ecossistema-phpfpm
+    build: ./docker/php
+    networks:
+      - backend
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - ENV_SYSTEM=DEV
+      - ENVIRONMENT=developer
+      - REGION=developer
+
+  redis:
+    container_name: ecossistema-redis
+    image: redis:4.0-alpine
+    networks:
+      - backend
+
+  init:
+    container_name: ecossistema-init
+    build: ./docker/init
+    networks:
+      - backend
+    volumes:
+      - ./:/var/www/html
+
+networks:
+  backend:

@@ -1,0 +1,98 @@
+FROM php:7.0-fpm-alpine
+
+ENV PHALCON_VERSION=3.2.3
+ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
+RUN apk add --update nodejs nodejs-npm git
+#RUN npm install -g bower
+
+# - apk add
+#    para conseguir usar a funcao iconv (usada na impressao da avaliacao),
+#    foi necessario incluir gnu-libiconv
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.12/community/ gnu-libiconv=1.15-r2
+
+RUN apk add --update make gcc g++ \
+    libc-dev \
+    autoconf \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libmcrypt-dev \
+    libpcre32 \
+    bzip2 \
+    libbz2 \
+    bzip2-dev \
+    libmemcached-dev \
+    cyrus-sasl-dev \
+    binutils \
+    libxml2-dev \
+    icu-dev \
+#    --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+#    gnu-libiconv \
+    libressl-dev \
+    && rm -rf /var/cache/apk/*
+
+# - copy composer executable
+COPY --from=composer /usr/bin/composer /usr/bin/
+# composer self-update --2
+
+# - compile phalcon
+RUN set -xe \
+    && curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
+    && tar xzf v${PHALCON_VERSION}.tar.gz \
+    && cd cphalcon-${PHALCON_VERSION}/build \
+    && sh install \
+    && cd ../.. \
+    && rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION}
+
+# - docker-php-ext-install
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install mysqli \
+    && docker-php-ext-install bz2 \
+    && docker-php-ext-install zip \
+    && docker-php-ext-install pdo \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install opcache \
+    && docker-php-ext-install soap \
+    && docker-php-ext-install intl \
+    && docker-php-ext-install exif \
+    && docker-php-ext-install bcmath
+
+# - pecl install
+RUN pecl install -o -f redis-4.2.0 \
+    && pecl install -o -f xdebug-2.7.0 \
+    && pecl install -o -f mongodb-1.5.3 \
+    && pecl install -o -f igbinary-3.0.0 \
+    && pecl install -o -f mcrypt-1.0.1
+
+# - imagick install
+ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions imagick
+
+# - enable extensions
+RUN docker-php-ext-enable redis mongodb igbinary phalcon xdebug mcrypt
+
+# - php.ini files and configurations
+#     variables_order.ini - para corrigir problema com filter_input, se a variavel estiver como EGPCS,
+#     sempre é retornado null em operações semelhantes a: filter_input(INPUT_SERVER, 'HTTP_HOST')
+
+ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/php-upload.ini
+RUN echo "upload_max_filesize=200M" >> ${XDEBUG_INI_FILE} \
+    && echo "max_file_uploads=100" >> ${XDEBUG_INI_FILE} \
+    && echo "post_max_size = 100M" >> ${XDEBUG_INI_FILE}
+
+
+RUN echo "xdebug.remote_port=10000" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.coverage_enable=0" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_enable=1" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_connect_back=1" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_log=/tmp/xdebug.log" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_autostart=true" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_host=host.docker.internal" >> ${XDEBUG_INI_FILE} \
+    && echo "variables_order=GPCS" >> /usr/local/etc/php/conf.d/variables_order.ini
+
+RUN apk add tzdata \
+    && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
