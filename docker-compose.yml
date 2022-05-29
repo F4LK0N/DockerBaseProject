@@ -5,7 +5,7 @@ services:
     build: ./docker/php-apache
     volumes:
       - ./docker/php-apache/apache/apache2.conf:/etc/apache2/apache2.conf
-      - ./src/public:/var/www/html/
+      - ./src/:/var/www/html/
     networks:
       - backend
     ports:
