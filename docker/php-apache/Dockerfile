@@ -7,6 +7,7 @@ RUN apt-get update
 
 RUN apt-get install -y git
 
+#This is from alpine, find a solution for debian
 RUN rm -rf /var/cache/apk/*
 
 
