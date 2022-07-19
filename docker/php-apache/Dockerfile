@@ -1,25 +1,47 @@
 FROM php:8.1-apache
 
 ########################################################################################################################
-### SYSTEM ##
+### DEBIAN SYSTEM ###
 ########################################################################################################################
+#Updata Packages
 RUN apt-get update
 
+#Install Packages
 RUN apt-get install -y git
 
-#This is from alpine, find a solution for debian
-RUN rm -rf /var/cache/apk/*
+#Clear Packages Data
+RUN apt clean
 
 
 
 ########################################################################################################################
-### APACHE ##
+### APACHE SERVER ###
 ########################################################################################################################
-RUN rm /etc/apache2/conf-enabled/*
-COPY apache/conf-enabled/ /etc/apache2/conf-enabled/
+# Configuration Files:
+########################################################################################################################
+# /etc/apache2/
+#   apache.conf
+#   envvars
+#   magic
+#   ports.conf
+#   conf-available/
+#   conf-enabled/
+#   mods-available/
+#   mods-available/
+#   sites-available/
+#   Sites-enabled/
+########################################################################################################################
+# Log Files:
+########################################################################################################################
+# /var/log/apache2/
+#   access.log
+#   error.log
+########################################################################################################################
+#RUN rm /etc/apache2/conf-enabled/*
+#COPY apache/conf-enabled/ /etc/apache2/conf-enabled/
 
-RUN rm /etc/apache2/sites-enabled/*
-COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
+#RUN rm /etc/apache2/sites-enabled/*
+#COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
 
 
 
@@ -33,5 +55,5 @@ COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
 ########################################################################################################################
 ### COMPOSER ##
 ########################################################################################################################
-COPY --from=composer /usr/bin/composer /usr/bin/
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
