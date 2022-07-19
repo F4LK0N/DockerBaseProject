@@ -4,7 +4,12 @@ services:
     container_name: php-apache
     build: ./docker/php-apache
     volumes:
+      # Apache Config
       - ./docker/php-apache/apache/apache2.conf:/etc/apache2/apache2.conf
+      - ./docker/php-apache/apache/envvars:/etc/apache2/envvars
+      - ./docker/php-apache/apache/magic:/etc/apache2/magic
+      - ./docker/php-apache/apache/ports.conf:/etc/apache2/ports.conf
+      # Apache Working Directory
       - ./src/:/var/www/html/
     networks:
       - backend
