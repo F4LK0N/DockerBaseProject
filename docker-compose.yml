@@ -1,19 +1,19 @@
 version: '3'
 services:
-  php-apache:
-    container_name: php-apache
-    build: ./docker/php-apache
+  server:
+    container_name: server
+    build: ./docker/server
     volumes:
       # Apache Config
-      - ./docker/php-apache/apache/apache2.conf:/etc/apache2/apache2.conf
-      - ./docker/php-apache/apache/envvars:/etc/apache2/envvars
-      - ./docker/php-apache/apache/magic:/etc/apache2/magic
-      - ./docker/php-apache/apache/ports.conf:/etc/apache2/ports.conf
+      #- ./docker/php-apache/apache/apache2.conf:/etc/apache2/apache2.conf
+      #- ./docker/php-apache/apache/envvars:/etc/apache2/envvars
+      #- ./docker/php-apache/apache/magic:/etc/apache2/magic
+      #- ./docker/php-apache/apache/ports.conf:/etc/apache2/ports.conf
       # Apache Logs (Not Working)
       ##- ./docker/php-apache/apache/logs/access.log:/var/log/apache2/access.log
       ##- ./docker/php-apache/apache/logs/error.log:/var/log/apache2/error.log
       # Apache Working Directory
-      - ./src/:/var/www/html/
+      - ./src/:/usr/local/apache2/htdocs/
     networks:
       - backend
     ports:

@@ -1,21 +1,23 @@
-FROM php:8.1-apache
+FROM httpd:2.4-bullseye
+
+
 
 ########################################################################################################################
-### DEBIAN SYSTEM ###
+### DEBIAN ###
 ########################################################################################################################
 #Updata Packages
-RUN apt-get update
+#RUN apt-get update
 
 #Install Packages
-RUN apt-get install -y git
+#RUN apt-get install -y git
 
 #Clear Packages Data
-RUN apt clean
+#RUN apt clean
 
 
 
 ########################################################################################################################
-### APACHE SERVER ###
+### APACHE ###
 ########################################################################################################################
 # Configuration Files #
 #######################
@@ -37,39 +39,39 @@ RUN apt clean
 #   access.log
 #   error.log
 ########################################################################################################################
-RUN rm /etc/apache2/conf-enabled/*
-COPY apache/conf-enabled/ /etc/apache2/conf-enabled/
-
-RUN rm /etc/apache2/mods-enabled/*
-COPY apache/mods-enabled/ /etc/apache2/mods-enabled/
-
-RUN rm /etc/apache2/sites-enabled/*
-COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
+#RUN rm /etc/apache2/conf-enabled/*
+#COPY apache/conf-enabled/ /etc/apache2/conf-enabled/
+#
+#RUN rm /etc/apache2/mods-enabled/*
+#COPY apache/mods-enabled/ /etc/apache2/mods-enabled/
+#
+#RUN rm /etc/apache2/sites-enabled/*
+#COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
 
 
 
 ########################################################################################################################
 ### PHP ##
 ########################################################################################################################
-COPY php/php.ini /usr/local/etc/php/php.ini
+#COPY php/php.ini /usr/local/etc/php/php.ini
 
 # XDEBUG
-RUN pecl install -o -f xdebug
-RUN docker-php-ext-enable xdebug
-ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_port=10080" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.mode=coverage" >>  ${XDEBUG_INI_FILE} \
-    && echo "xdebug.coverage_enable=1" >>  ${XDEBUG_INI_FILE} \
-    && echo "xdebug.remote_enable=1" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.remote_connect_back=1" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.remote_log=/tmp/xdebug.log" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.remote_autostart=true" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.remote_host=host.docker.internal" >> ${XDEBUG_INI_FILE}
+#RUN pecl install -o -f xdebug
+#RUN docker-php-ext-enable xdebug
+#ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_port=10080" >> ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.mode=coverage" >>  ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.coverage_enable=1" >>  ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.remote_enable=1" >> ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.remote_connect_back=1" >> ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.remote_log=/tmp/xdebug.log" >> ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.remote_autostart=true" >> ${XDEBUG_INI_FILE} \
+#    && echo "xdebug.remote_host=host.docker.internal" >> ${XDEBUG_INI_FILE}
 
 
 
 ########################################################################################################################
 ### COMPOSER ##
 ########################################################################################################################
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+#COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
