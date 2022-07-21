@@ -53,6 +53,19 @@ COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
 ########################################################################################################################
 COPY php/php.ini /usr/local/etc/php/php.ini
 
+# XDEBUG
+RUN pecl install -o -f xdebug
+RUN docker-php-ext-enable xdebug
+ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.remote_port=10080" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.mode=coverage" >>  ${XDEBUG_INI_FILE} \
+    && echo "xdebug.coverage_enable=1" >>  ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_enable=1" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_connect_back=1" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_log=/tmp/xdebug.log" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_autostart=true" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.remote_host=host.docker.internal" >> ${XDEBUG_INI_FILE}
+
 
 
 ########################################################################################################################
