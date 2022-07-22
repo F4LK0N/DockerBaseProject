@@ -6,13 +6,14 @@ FROM httpd:2.4-bullseye
 ### DEBIAN ###
 ########################################################################################################################
 #Updata Packages
-#RUN apt-get update
+RUN apt-get update
+RUN apt-get -y upgrade
 
 #Install Packages
-#RUN apt-get install -y git
+RUN apt-get install -y git
 
 #Clear Packages Data
-#RUN apt clean
+RUN apt clean
 
 
 
