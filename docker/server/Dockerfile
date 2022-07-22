@@ -54,6 +54,9 @@ RUN apt clean
 ########################################################################################################################
 ### PHP ##
 ########################################################################################################################
+RUN apt-get install -y libapache2-mod-php
+RUN a2enmod php7.*
+#RUN systemctl restart apache2
 #COPY php/php.ini /usr/local/etc/php/php.ini
 
 # XDEBUG
