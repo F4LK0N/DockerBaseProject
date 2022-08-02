@@ -37,14 +37,14 @@ RUN apt clean
 #   access.log
 #   error.log
 ########################################################################################################################
-RUN rm /etc/apache2/conf-enabled/*
-COPY apache/conf-enabled/ /etc/apache2/conf-enabled/
+#RUN rm /etc/apache2/conf-enabled/*
+#COPY apache/conf-enabled/ /etc/apache2/conf-enabled/
 
-RUN rm /etc/apache2/mods-enabled/*
-COPY apache/mods-enabled/ /etc/apache2/mods-enabled/
+#RUN rm /etc/apache2/mods-enabled/*
+#COPY apache/mods-enabled/ /etc/apache2/mods-enabled/
 
-RUN rm /etc/apache2/sites-enabled/*
-COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
+#RUN rm /etc/apache2/sites-enabled/*
+#COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
 
 
 

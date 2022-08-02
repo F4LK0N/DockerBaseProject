@@ -9,6 +9,9 @@ services:
       - ./docker/php-apache/apache/envvars:/etc/apache2/envvars
       - ./docker/php-apache/apache/magic:/etc/apache2/magic
       - ./docker/php-apache/apache/ports.conf:/etc/apache2/ports.conf
+      - ./docker/php-apache/apache/conf-enabled/:/etc/apache2/conf-enabled/
+      - ./docker/php-apache/apache/mods-enabled/:/etc/apache2/mods-enabled/
+      - ./docker/php-apache/apache/sites-enabled/:/etc/apache2/sites-enabled/
       # Apache Logs (Not Working)
       ##- ./docker/php-apache/apache/logs/access.log:/var/log/apache2/access.log
       ##- ./docker/php-apache/apache/logs/error.log:/var/log/apache2/error.log
