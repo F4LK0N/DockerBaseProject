@@ -53,7 +53,7 @@ COPY apache/sites-enabled/ /etc/apache2/sites-enabled/
 ########################################################################################################################
 COPY php/php.ini /usr/local/etc/php/php.ini
 
-# XDEBUG
+# XDebug
 RUN pecl install -o -f xdebug
 RUN docker-php-ext-enable xdebug
 ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
