@@ -38,6 +38,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/
 # composer self-update --2
 
 # - compile phalcon
+ENV PHALCON_VERSION=5.0.0RC2
 RUN set -xe \
     && curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
     && tar xzf v${PHALCON_VERSION}.tar.gz \
