@@ -61,13 +61,10 @@ RUN echo "xdebug.mode=develop,debug" >>  ${XDEBUG_INI_FILE} \
     && echo "xdebug.cli_color=1" >> ${XDEBUG_INI_FILE} \
     && echo "xdebug.client_host=127.0.0.1" >> ${XDEBUG_INI_FILE} \
     && echo "xdebug.client_port=10080" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.discover_client_host=true" >> ${XDEBUG_INI_FILE}
-#    && echo "xdebug.coverage_enable=1" >>  ${XDEBUG_INI_FILE} \
-#    && echo "xdebug.remote_enable=1" >> ${XDEBUG_INI_FILE} \
-#    && echo "xdebug.remote_connect_back=1" >> ${XDEBUG_INI_FILE} \
-#    && echo "xdebug.remote_log=/tmp/xdebug.log" >> ${XDEBUG_INI_FILE} \
-#    && echo "xdebug.remote_autostart=true" >> ${XDEBUG_INI_FILE} \
-#    && echo "xdebug.remote_host=host.docker.internal" >> ${XDEBUG_INI_FILE}
+    && echo "xdebug.discover_client_host=true" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.var_display_max_data=2048" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.var_display_max_depth=10" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.var_display_max_children=512" >> ${XDEBUG_INI_FILE}
 
 
 
