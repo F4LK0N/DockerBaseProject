@@ -7,10 +7,10 @@ FROM php:8.1-apache
 RUN apt-get update
 
 #Install Packages
-RUN apt-get install -y git
+RUN apt-get install -y git zip unzip zlib1g-dev libzip-dev make gcc g++ libc-dev autoconf
 
 #Clear Packages Data
-RUN apt clean
+#RUN apt clean
 
 
 
@@ -59,8 +59,9 @@ RUN docker-php-ext-enable xdebug
 ENV XDEBUG_INI_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.mode=develop,debug" >>  ${XDEBUG_INI_FILE} \
     && echo "xdebug.cli_color=1" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.client_host=host.docker.internal" >> ${XDEBUG_INI_FILE} \
-    && echo "xdebug.client_port=10080" >> ${XDEBUG_INI_FILE}
+    && echo "xdebug.client_host=127.0.0.1" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.client_port=10080" >> ${XDEBUG_INI_FILE} \
+    && echo "xdebug.discover_client_host=true" >> ${XDEBUG_INI_FILE}
 #    && echo "xdebug.coverage_enable=1" >>  ${XDEBUG_INI_FILE} \
 #    && echo "xdebug.remote_enable=1" >> ${XDEBUG_INI_FILE} \
 #    && echo "xdebug.remote_connect_back=1" >> ${XDEBUG_INI_FILE} \
@@ -75,3 +76,15 @@ RUN echo "xdebug.mode=develop,debug" >>  ${XDEBUG_INI_FILE} \
 ########################################################################################################################
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+#CMD composer install
+#
+#CMD composer update
+#
+#CMD composer dumpautoload
+
+
+
+########################################################################################################################
+### ENTRYPOINT ##
+########################################################################################################################
+#CMD /usr/local/bin/apache2-foreground
