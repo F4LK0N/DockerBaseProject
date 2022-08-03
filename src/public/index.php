@@ -1,16 +1,15 @@
 <?php
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Factory\AppFactory;
 
-var_dump([
-    "String string string",
-    true,
-    1234,
-    [1,2,3],
-    (object)[
-        "attrb1"=>3,
-        "attrb2"=>6,
-    ]
-]);
+require __DIR__ . '/../vendor/autoload.php';
 
-xdebug_info();
+$app = AppFactory::create();
 
-phpinfo();
+$app->get('/', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Hello World!");
+    return $response;
+});
+
+$app->run();
