@@ -5,12 +5,12 @@ FROM php:8.1-apache
 ########################################################################################################################
 #Updata Packages
 RUN apt-get update
-
-#Install Packages
 RUN apt-get install -y git zip unzip zlib1g-dev libzip-dev make gcc g++ libc-dev autoconf
+RUN apt-get update
+RUN apt-get upgrade -y
 
-#Clear Packages Data
-#RUN apt clean
+RUN apt-get autoremove
+RUN apt-get clean
 
 
 
@@ -75,11 +75,8 @@ RUN echo "xdebug.mode=develop,debug" >>  ${XDEBUG_INI_FILE} \
 ### COMPOSER ##
 ########################################################################################################################
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
 #CMD composer install
-#
 #CMD composer update
-#
 #CMD composer dumpautoload
 
 
