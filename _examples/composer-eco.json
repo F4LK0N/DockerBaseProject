@@ -1,0 +1,66 @@
+{
+    "name": "auto-avaliar/symbiosis",
+    "description": "Ecossistema AutoAvaliar",
+    "authors": [
+        {
+            "name": "William Pamplona (Dom Will)",
+            "email": "will_wa3@hotmail.com"
+        }
+    ],
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": { "Config\\": "app/config" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Tests\\": "tests/" }
+    },
+    "require": {
+        "sendgrid/sendgrid": "~7",
+        "php": "7.0.*",
+        "ext-gd" : "*",
+        "ext-phalcon" : "*",
+        "ext-redis" : "*",
+        "ext-mongodb" : "*",
+        "ext-soap" : "*",
+        "ext-curl" : "*",
+        "ext-intl" : "*",
+        "ext-exif" : "*",
+        "ext-imagick" : "*",
+        "ext-json" : "*",
+        "firebase/php-jwt" : "*",
+        "phpmailer/phpmailer": "^5.2",
+        "dompdf/dompdf": "^0.8.0",
+        "zendframework/zendservice-apple-apns": "^1.2",
+        "zendframework/zendservice-google-gcm": "^2.0",
+        "sunra/php-simple-html-dom-parser": "^1.5",
+        "fergusean/nusoap": "^0.9.5",
+        "facebook/graph-sdk": "^5.4",
+        "microsoft/azure-storage": "^0.15.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "meng-tian/async-soap-guzzle": "^0.2.4",
+        "pear/http_request2": "^2.3",
+        "google/cloud-storage": "^1.1",
+        "google/cloud": "^0.36.0",
+        "phalcon/incubator": "^2.0",
+        "reisraff/accentuation": "^2.0",
+        "phpoffice/phpspreadsheet": "^1.2",
+        "setasign/fpdi-fpdf": "^2.2",
+        "hpatoio/bitly-api": "^2.0",
+        "ralouphie/mimey": "^2.0",
+        "ext-bcmath": "*",
+        "google/recaptcha": "^1.2",
+        "autoaction/utils": "^1.13",
+        "myclabs/deep-copy": "*",
+        "autoaction/phalcon": "^1.1.5",
+        "autoaction/hg": "dev-develop",
+        "autoaction/vbn-client": "1.2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6",
+        "phpunit/dbunit": "^3.0",
+        "raveren/kint": "1.2.*",
+        "mockery/mockery": "^1.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

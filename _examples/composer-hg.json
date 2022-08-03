@@ -1,0 +1,44 @@
+{
+  "require": {
+    "php": "7.2.*",
+    "ext-gd": "*",
+    "ext-phalcon": "*",
+    "ext-redis": "*",
+    "ext-xml": "*",
+    "ext-mbstring": "*",
+    "ext-soap" : "*",
+    "ext-json" : "*",
+    "ext-pdo" : "*",
+    "ext-grpc" : "*",
+    "phpmailer/phpmailer": "^6.0",
+    "sendgrid/sendgrid": "^7.11",
+    "raveren/kint": "^1.1",
+    "firebase/php-jwt": "^5.0",
+    "twig/twig": "^2.4",
+    "guzzlehttp/guzzle": "~6.0",
+    "psr/http-message": "^1.0",
+    "psr/http-server-middleware": "^1.0",
+    "psr/log": "^1.0",
+    "google/cloud-datastore": "^1.2",
+    "google/cloud-pubsub": "^1.4.0",
+    "google/cloud-storage": "^1.6",
+    "google/cloud-bigquery": "v1.23.*",
+    "autoaction/utils": "^1.13",
+    "ext-bcmath": "*",
+    "erusev/parsedown": "^1.7",
+    "autoaction/phalcon": "^1.1",
+    "google/cloud-firestore": "^1.21"
+  },
+  "autoload": {
+    "files": ["app/config/app-autoload.php"],
+    "psr-4": {
+      "Config\\": "app/config",
+      "Init\\": "app/init",
+      "Mercury\\": "app/mercury"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5",
+    "mockery/mockery": "^1.2"
+  }
+}
